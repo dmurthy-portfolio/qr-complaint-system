@@ -4,7 +4,7 @@
 // status updates, deletion, and image download.
 // =====================================================================
 const path = require('path');
-const fs = require('fs');
+const cloudinary = require('../config/cloudinary');
 const pool = require('../config/db');
 
 const VALID_STATUSES = ['Pending', 'In Progress', 'Resolved'];
@@ -30,7 +30,7 @@ async function createComplaint(req, res) {
       return res.status(400).json({ success: false, message: 'Invalid mobile number format.' });
     }
 
-    const imagePath = `/uploads/${req.file.filename}`;
+    const imagePath = req.file.path;
 
     const [result] = await pool.query(
       `INSERT INTO complaints (name, mobile_number, image_path, status)
@@ -162,26 +162,46 @@ async function deleteComplaint(req, res) {
   try {
     const { id } = req.params;
 
-    const [rows] = await pool.query('SELECT image_path FROM complaints WHERE id = ?', [id]);
+    const [rows] = await pool.query(
+      'SELECT image_path FROM complaints WHERE id = ?',
+      [id]
+    );
+
     if (rows.length === 0) {
-      return res.status(404).json({ success: false, message: 'Complaint not found.' });
+      return res.status(404).json({
+        success: false,
+        message: 'Complaint not found.',
+      });
+    }
+
+    const imageUrl = rows[0].image_path;
+
+    // Delete image from Cloudinary
+    try {
+      const parts = imageUrl.split('/');
+      const filename = parts[parts.length - 1];
+      const publicId =
+        'complaint-system/' + filename.substring(0, filename.lastIndexOf('.'));
+
+      await cloudinary.uploader.destroy(publicId);
+    } catch (err) {
+      console.warn('Could not delete Cloudinary image:', err.message);
     }
 
     await pool.query('DELETE FROM complaints WHERE id = ?', [id]);
 
-    // Attempt to remove the image file from disk (non-fatal if it fails)
-    const imageFullPath = path.join(__dirname, '..', rows[0].image_path);
-    fs.unlink(imageFullPath, (err) => {
-      if (err) console.warn('Could not delete image file:', imageFullPath, err.message);
+    return res.json({
+      success: true,
+      message: 'Complaint deleted successfully.',
     });
-
-    return res.json({ success: true, message: 'Complaint deleted successfully.' });
   } catch (err) {
     console.error('Delete complaint error:', err);
-    return res.status(500).json({ success: false, message: 'Server error while deleting complaint.' });
+    return res.status(500).json({
+      success: false,
+      message: 'Server error while deleting complaint.',
+    });
   }
 }
-
 // ---------------------------------------------------------------------
 // GET /api/complaints/:id/download  (admin, protected)
 // Streams the uploaded image back as a downloadable file.
@@ -189,33 +209,28 @@ async function deleteComplaint(req, res) {
 async function downloadImage(req, res) {
   try {
     const { id } = req.params;
-    const [rows] = await pool.query('SELECT image_path, name FROM complaints WHERE id = ?', [id]);
+
+    const [rows] = await pool.query(
+      'SELECT image_path FROM complaints WHERE id = ?',
+      [id]
+    );
 
     if (rows.length === 0) {
-      return res.status(404).json({ success: false, message: 'Complaint not found.' });
+      return res.status(404).json({
+        success: false,
+        message: 'Complaint not found.',
+      });
     }
 
-    const imageFullPath = path.join(__dirname, '..', rows[0].image_path);
-
-    if (!fs.existsSync(imageFullPath)) {
-      return res.status(404).json({ success: false, message: 'Image file not found on server.' });
-    }
-
-    const ext = path.extname(imageFullPath);
-    const downloadName = `complaint-${id}-${rows[0].name.replace(/\s+/g, '_')}${ext}`;
-
-    return res.download(imageFullPath, downloadName);
+    return res.json({
+      success: true,
+      imageUrl: rows[0].image_path,
+    });
   } catch (err) {
     console.error('Download image error:', err);
-    return res.status(500).json({ success: false, message: 'Server error while downloading image.' });
+    return res.status(500).json({
+      success: false,
+      message: 'Server error while downloading image.',
+    });
   }
 }
-
-module.exports = {
-  createComplaint,
-  getComplaints,
-  getComplaintById,
-  updateStatus,
-  deleteComplaint,
-  downloadImage,
-};
