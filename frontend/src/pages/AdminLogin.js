@@ -45,7 +45,7 @@ function AdminLogin() {
             </svg>
           </div>
           <h1 className="font-display text-lg font-bold text-white">Admin Sign In</h1>
-          <p className="mt-1 text-sm text-ink-300">Sericulture Department Complaint Portal dashboard</p>
+          <p className="mt-1 text-sm text-ink-300">Govt Cocoon Market Ramnagar Complaint Portal  dashboard</p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-paper rounded-2xl shadow-ticket p-6 space-y-4">

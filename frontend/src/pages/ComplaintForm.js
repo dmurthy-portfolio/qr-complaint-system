@@ -125,7 +125,7 @@ function ComplaintForm() {
               />
             </svg>
           </div>
-          <h1 className="font-display text-lg font-bold text-white">Sericulture Department Complaint Portal</h1>
+          <h1 className="font-display text-lg font-bold text-white">Govt Cocoon Market Ramnagar Complaint Portal</h1>
           <p className="mt-1 text-sm text-ink-300">Report an issue in a few seconds.</p>
         </div>
 
