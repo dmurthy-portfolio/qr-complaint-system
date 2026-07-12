@@ -16,19 +16,31 @@ const PORT = process.env.PORT || 5000;
 // ---------------------------------------------------------------------
 // Middleware
 // ---------------------------------------------------------------------
-const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:3000').split(',');
+const allowedOrigins = (
+  process.env.CORS_ORIGIN ||
+  'http://localhost:3000,https://prismatic-beignet-d81d31.netlify.app'
+)
+  .split(',')
+  .map(origin => origin.trim());
+
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      // Allow requests without an origin (Postman, mobile apps, etc.)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`CORS not allowed for origin: ${origin}`));
+    },
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Serve uploaded complaint images statically
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 // ---------------------------------------------------------------------
 // Routes
 // ---------------------------------------------------------------------
