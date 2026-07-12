@@ -234,3 +234,12 @@ async function downloadImage(req, res) {
     });
   }
 }
+
+module.exports = {
+  createComplaint,
+  getComplaints,
+  getComplaintById,
+  updateStatus,
+  deleteComplaint,
+  downloadImage,
+};
