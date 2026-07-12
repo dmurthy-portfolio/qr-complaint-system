@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', sans-serif;
+  }
+  body {
+    @apply bg-paper text-ink-900;
+  }
+  /* Visible keyboard focus for accessibility */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid #e8a33d;
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* The signature "ticket stub" motif — a perforated edge used on the
+     complaint receipt and admin complaint cards, tying back to the
+     idea that every complaint becomes a trackable ticket. */
+  .ticket-notch {
+    position: relative;
+  }
+  .ticket-notch::before,
+  .ticket-notch::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    background: #faf9f6;
+    border-radius: 9999px;
+    transform: translateY(-50%);
+  }
+  .ticket-notch::before {
+    left: -10px;
+  }
+  .ticket-notch::after {
+    right: -10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
