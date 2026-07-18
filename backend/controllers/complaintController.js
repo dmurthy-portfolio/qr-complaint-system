@@ -15,7 +15,11 @@ const VALID_STATUSES = ['Pending', 'In Progress', 'Resolved'];
 // ---------------------------------------------------------------------
 async function createComplaint(req, res) {
   try {
-    const { name, mobile_number } = req.body;
+    const {
+  name,
+  mobile_number,
+  description
+} = req.body;
 
     if (!name || !name.trim()) {
       return res.status(400).json({ success: false, message: 'Name is required.' });
@@ -33,10 +37,16 @@ async function createComplaint(req, res) {
     const imagePath = req.file.path;
 
     const [result] = await pool.query(
-      `INSERT INTO complaints (name, mobile_number, image_path, status)
-       VALUES (?, ?, ?, 'Pending')`,
-      [name.trim(), mobile_number ? mobile_number.trim() : null, imagePath]
-    );
+  `INSERT INTO complaints
+  (name, mobile_number, image_path, description, status)
+  VALUES (?, ?, ?, ?, 'Pending')`,
+  [
+    name.trim(),
+    mobile_number ? mobile_number.trim() : null,
+    imagePath,
+    description ? description.trim() : null
+  ]
+);
 
     return res.status(201).json({
       success: true,
@@ -78,8 +88,16 @@ async function getComplaints(req, res) {
     const offset = (pageNum - 1) * limitNum;
 
     const [rows] = await pool.query(
-      `SELECT id, name, mobile_number, image_path, status, created_at, updated_at
-       FROM complaints
+      `SELECT id,
+       name,
+       mobile_number,
+       image_path,
+       description,
+       admin_remark,
+       status,
+       created_at,
+       updated_at
+      FROM complaints
        ${whereClause}
        ORDER BY created_at DESC
        LIMIT ? OFFSET ?`,
@@ -127,6 +145,52 @@ async function getComplaintById(req, res) {
 }
 
 // ---------------------------------------------------------------------
+// GET /api/complaints/public/:id
+// Public complaint status lookup
+// ---------------------------------------------------------------------
+async function getPublicComplaint(req, res) {
+  try {
+    const { id } = req.params;
+
+    const [rows] = await pool.query(
+      `
+      SELECT
+        id,
+        status,
+        description,
+        admin_remark,
+        image_path,
+        created_at
+      FROM complaints
+      WHERE id = ?
+      `,
+      [id]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Complaint not found."
+      });
+    }
+
+    return res.json({
+      success: true,
+      data: rows[0]
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error."
+    });
+
+  }
+}
+// ---------------------------------------------------------------------
 // PATCH /api/complaints/:id/status  (admin, protected)
 // ---------------------------------------------------------------------
 async function updateStatus(req, res) {
@@ -153,7 +217,49 @@ async function updateStatus(req, res) {
     return res.status(500).json({ success: false, message: 'Server error while updating status.' });
   }
 }
+// ---------------------------------------------------------------------
+// PATCH /api/complaints/:id/remark
+// ---------------------------------------------------------------------
+async function updateRemark(req, res) {
+  try {
+    const { id } = req.params;
+    const { admin_remark } = req.body;
 
+    const [result] = await pool.query(
+      `
+      UPDATE complaints
+      SET admin_remark = ?
+      WHERE id = ?
+      `,
+      [
+        admin_remark ? admin_remark.trim() : null,
+        id,
+      ]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Complaint not found.",
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: "Remark updated successfully.",
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error.",
+    });
+
+  }
+}
 // ---------------------------------------------------------------------
 // DELETE /api/complaints/:id  (admin, protected)
 // Deletes the DB record and the associated uploaded image file.
@@ -239,7 +345,9 @@ module.exports = {
   createComplaint,
   getComplaints,
   getComplaintById,
+  getPublicComplaint,
   updateStatus,
+  updateRemark,
   deleteComplaint,
   downloadImage,
 };
