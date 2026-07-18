@@ -10,6 +10,7 @@ import ComplaintForm from './pages/ComplaintForm';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import ComplaintStatus from "./pages/ComplaintStatus";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ComplaintForm />} />
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/status" element={<ComplaintStatus />} />
         <Route
           path="/admin/dashboard"
           element={
