@@ -50,8 +50,8 @@ const kn = {
   complaintTracker: "ದೂರು ಸ್ಥಿತಿ ಪರಿಶೀಲನೆ",
   checkStatus: "ಸ್ಥಿತಿ ಪರಿಶೀಲಿಸಿ",
   complaintDetails: "ದೂರಿನ ವಿವರಗಳು",
-  submittedOn: "ಸಲ್ಲಿಸಿದ ದಿನಾಂಕ",
 
+  submittedOn: "ಸಲ್ಲಿಸಿದ ದಿನಾಂಕ",
   status: "ಸ್ಥಿತಿ",
 
   pending: "ಬಾಕಿ",
@@ -62,43 +62,29 @@ const kn = {
 
   noDescription: "ಯಾವುದೇ ವಿವರಣೆ ನೀಡಲಾಗಿಲ್ಲ.",
   noRemark: "ಇನ್ನೂ ಯಾವುದೇ ಟಿಪ್ಪಣಿ ಇಲ್ಲ.",
+
   page: "ಪುಟ",
-of: "ರಲ್ಲಿ",
-totalComplaints: "ಒಟ್ಟು ದೂರುಗಳು",
-previous: "ಹಿಂದೆ",
-next: "ಮುಂದೆ",
-scanQR: "ಸಮಸ್ಯೆಯನ್ನು ವರದಿ ಮಾಡಲು QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ",
-printQR: "ಈ QR ಕೋಡ್ ಅನ್ನು ಮುದ್ರಿಸಿ ಕಚೇರಿಯ ಸುತ್ತಮುತ್ತ ಅಂಟಿಸಿ.",
-close: "ಮುಚ್ಚಿ",
-showQR: "QR ಕೋಡ್ ತೋರಿಸಿ",
-loading: "ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
-complaintImage: "ದೂರಿನ ಚಿತ್ರ",
-description: "ವಿವರಣೆ",
-adminRemark: "ನಿರ್ವಾಹಕರ ಟಿಪ್ಪಣಿ",
-status: "ಸ್ಥಿತಿ",
-submittedOn: "ಸಲ್ಲಿಸಿದ ದಿನಾಂಕ",
-name: "ಹೆಸರು",
-mobile: "ಮೊಬೈಲ್",
-close: "ಮುಚ್ಚಿ",
-noDescription: "ಯಾವುದೇ ವಿವರಣೆ ನೀಡಲಾಗಿಲ್ಲ.",
+  of: "ರಲ್ಲಿ",
+  totalComplaints: "ಒಟ್ಟು ದೂರುಗಳು",
+  previous: "ಹಿಂದೆ",
+  next: "ಮುಂದೆ",
+
+  scanQR: "ಸಮಸ್ಯೆಯನ್ನು ವರದಿ ಮಾಡಲು QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ",
+  printQR: "ಈ QR ಕೋಡ್ ಅನ್ನು ಮುದ್ರಿಸಿ ಕಚೇರಿಯ ಸುತ್ತಮುತ್ತ ಅಂಟಿಸಿ.",
+  showQR: "QR ಕೋಡ್ ತೋರಿಸಿ",
 
   // =========================
   // Admin
   // =========================
   adminLogin: "ನಿರ್ವಾಹಕರ ಲಾಗಿನ್",
   adminDashboard: "ನಿರ್ವಾಹಕರ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
-adminLogin: "ನಿರ್ವಾಹಕರ ಲಾಗಿನ್",
-username: "ಬಳಕೆದಾರ ಹೆಸರು",
-password: "ಪಾಸ್‌ವರ್ಡ್",
-login: "ಲಾಗಿನ್",
-signingIn: "ಲಾಗಿನ್ ಆಗುತ್ತಿದೆ...",
-loginFailed: "ಲಾಗಿನ್ ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+
   username: "ಬಳಕೆದಾರ ಹೆಸರು",
   password: "ಪಾಸ್‌ವರ್ಡ್",
   login: "ಲಾಗಿನ್",
+  signingIn: "ಲಾಗಿನ್ ಆಗುತ್ತಿದೆ...",
+  loginFailed: "ಲಾಗಿನ್ ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
   logout: "ಲಾಗ್ ಔಟ್",
-
-  totalComplaints: "ಒಟ್ಟು ದೂರುಗಳು",
 
   // =========================
   // Complaint Table

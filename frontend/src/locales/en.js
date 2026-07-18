@@ -49,8 +49,8 @@ const en = {
   complaintTracker: "Complaint Status Tracker",
   checkStatus: "Check Status",
   complaintDetails: "Complaint Details",
-  submittedOn: "Submitted On",
 
+  submittedOn: "Submitted On",
   status: "Status",
 
   pending: "Pending",
@@ -61,43 +61,29 @@ const en = {
 
   noDescription: "No description provided.",
   noRemark: "No remarks yet.",
+
   page: "Page",
-of: "of",
-totalComplaints: "Total Complaints",
-previous: "Previous",
-next: "Next",
-scanQR: "Scan to Report an Issue",
-printQR: "Print and place this QR code around the office.",
-close: "Close",
-showQR: "Show QR Code",
-loading: "Loading...",
-complaintImage: "Complaint Image",
-description: "Description",
-adminRemark: "Admin Remark",
-status: "Status",
-submittedOn: "Submitted On",
-name: "Name",
-mobile: "Mobile",
-close: "Close",
-noDescription: "No description provided.",
+  of: "of",
+  totalComplaints: "Total Complaints",
+  previous: "Previous",
+  next: "Next",
+
+  scanQR: "Scan to Report an Issue",
+  printQR: "Print and place this QR code around the office.",
+  showQR: "Show QR Code",
 
   // =========================
   // Admin
   // =========================
   adminLogin: "Admin Login",
   adminDashboard: "Admin Dashboard",
-adminLogin: "Admin Login",
-username: "Username",
-password: "Password",
-login: "Sign In",
-signingIn: "Signing In...",
-loginFailed: "Login failed. Please try again.",
+
   username: "Username",
   password: "Password",
   login: "Login",
+  signingIn: "Signing In...",
+  loginFailed: "Login failed. Please try again.",
   logout: "Logout",
-
-  totalComplaints: "Total Complaints",
 
   // =========================
   // Complaint Table
